@@ -8,7 +8,7 @@ ser = serial.Serial('/dev/ttyACM0',9600)
 def logData(hum, temp, press):
 	conn = sqlite3.connect('sensorsDataTest.db')
 	curs = conn.cursor()
-	curs.execute("INSERT INTO DHT_data VALUES(datetime('now'),(?),(?),(?))",(hum,temp,press))
+	curs.execute("INSERT INTO DHT_data VALUES(datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?),(?),(?))",(hum,temp,press))
 	conn.commit()
 	conn.close()
 	time.sleep(5)
