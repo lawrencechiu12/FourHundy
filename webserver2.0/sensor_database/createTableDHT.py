@@ -3,5 +3,5 @@ import sys
 con = lite.connect('sensorsData.db')
 with con: 
     cur = con.cursor() 
-    cur.execute("DROP TABLE IF EXISTS DHT_data")
-    cur.execute("CREATE TABLE DHT_data(timestamp DATETIME, temp NUMERIC, hum NUMERIC)")
+    cur.execute("DROP TABLE IF EXISTS MOTION_stat")
+    cur.execute("CREATE TABLE MOTION_stat(timestamp DATETIME, stat NUMERIC)")
