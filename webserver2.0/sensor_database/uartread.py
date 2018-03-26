@@ -14,7 +14,8 @@ ser.flushInput()
 def logData(status):
 	conn = sqlite3.connect('sensorsData.db')
 	curs = conn.cursor()
-	curs.execute("INSERT INTO MOTION_stat VALUES(datetime('now'),(?))",(status))
+	#curs.execute("INSERT INTO MOTION_stat VALUES(datetime(strftime('now'),(?))",(status))
+	curs.execute("INSERT INTO MOTION_stat VALUES(datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?))",(status,))
 	conn.commit()
 	conn.close()
 	time.sleep(5)
@@ -28,15 +29,15 @@ while True:
 			print(message)
 
 		if message == "a31BUTTONON-":
-			stat = 1
-			logData(stat)
-			print(stat)
+			status = 1
+			logData(status)
+			print(status)
 			message == "\0"
 
 		elif message == "a31BUTTONOFF":
-			stat = 0
-			logData(stat)
-			print(stat)
+			status = 0
+			logData(status)
+			print(status)
 			message == "\0"
 
 		else:
