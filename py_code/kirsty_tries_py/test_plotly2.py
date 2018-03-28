@@ -10,12 +10,15 @@ username = 'kirstycha'
 api_key = 'IGTdhsbggLKYae1wi7Ej'
 stream_token = 'a9kvj05v66'
 
+conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
+curs = conn.cursor()
+
 def plot_it(x_data, temp, hum, press):
     trace0 = Scatter(
         x=x_data,
         y=temp,
-        mode = 'lines+markers'
-        name = 'Temperature(Celsius)'
+        mode = 'lines+markers',
+        name = 'Temperature(Celsius)',
         stream = dict(
             token=stream_token,
             maxpoints = 100
@@ -24,8 +27,8 @@ def plot_it(x_data, temp, hum, press):
     trace1 = Scatter(
         x=x_data,
         y=hum,
-        mode = 'lines+markers'
-        name = 'Humidity(%)'
+        mode = 'lines+markers',
+        name = 'Humidity(%)',
         stream = dict(
             token=stream_token,
             maxpoints = 100
@@ -34,8 +37,8 @@ def plot_it(x_data, temp, hum, press):
     trace2= Scatter(
         x=x_data,
         y=press,
-        mode = 'lines+markers'
-        name = 'Pressure(kpa)'
+        mode = 'lines+markers',
+        name = 'Pressure(kpa)',
         stream = dict(
             token=stream_token,
             maxpoints = 100
@@ -46,8 +49,8 @@ def plot_it(x_data, temp, hum, press):
     print py.plot(fig, filename = 'home conditions')
 
 def getHistData (numSamples):
-    conn = sqlite3.connect('sensorsData.db')
-    curs = conn.cursor()
+#    conn = sqlite3.connect('sensorsData.db')
+#    curs = conn.cursor()
     curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(numSamples))
     data = curs.fetchall()
     #datesUTC = []
@@ -55,7 +58,7 @@ def getHistData (numSamples):
     temps = []
     hums = []
     press = []
-    conn.close()
+#    conn.close()
     for row in reversed(data):
         datesLOC.append(row[1])
         temps.append(row[2])
