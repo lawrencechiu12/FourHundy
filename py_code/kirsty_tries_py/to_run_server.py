@@ -2,7 +2,7 @@ import serial
 import sqlite3
 import sys
 import time
-import plotly.ploty as plotly
+import plotly.ploty as py
 #from flask import Flask, render_template
 #stuff for plotly
 username = 'kirstycha'
@@ -31,7 +31,7 @@ def plot_1(x_data,y_data,data_name):
             )
         layout = Layout(title= data_name)
         fig = Figure(data=[trace0], layout = layout)
-        print plotly.plot(fig, filename = data_name)
+        print py.plot(fig, filename = data_name)
 
 def plot_3(x_data, temp, hum, press):
     plot_1(x_data, temp, "Temperature")
@@ -39,12 +39,12 @@ def plot_3(x_data, temp, hum, press):
     plot_1(x_data, press, "Pressure")
 
 def sign_in_plotly():
-    plotly.sign_in(username, api_key)
-    stream1 = plotly.Stream(stream_token1)
+    py.sign_in(username, api_key)
+    stream1 = py.Stream(stream_token1)
     stream1.open()
-    stream2 = plotly.Stream(stream_token2)
+    stream2 = py.Stream(stream_token2)
     stream2.open()
-    stream3 = plotly.Stream(stream_token3)
+    stream3 = py.Stream(stream_token3)
     stream3.open()
 
 def logData(hum, temp, press):
