@@ -3,6 +3,7 @@ import sqlite3
 import sys
 import time
 import plotly.ploty as py
+from plotly.graph_objs import Scatter, Layout, Figure
 #from flask import Flask, render_template
 #stuff for plotly
 username = 'kirstycha'
@@ -11,7 +12,7 @@ stream_token1 = 'a9kvj05v66'
 stream_token2 = 'cv8vfh7m5j'
 stream_token3 = 'fzr4foq2t6'
 #for flask operation
-app = Flask(__name__)
+#app = Flask(__name__)
 #serial port  and baud rate
 ser = serial.Serial('/dev/ttyACM0',9600)
 #to connect to database
@@ -101,9 +102,10 @@ def check_numSamples():
 
 
 #define and initialize global variables
-global numSamples = 0
+global numSamples
 global stream1, stream2, stream3
 pullData()
+numSamples = 0
 check_numSamples()
 times, temps, hums, press = getHistData(numSamples)
 sign_in_plotly()
