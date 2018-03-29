@@ -3,7 +3,7 @@ import time
 import sys
 
 
-
+# This function pulls the latest 6 sets of data from the database
 def getData(num):
 	conn = sqlite3.connect('sensorsData.db')
 	curs = conn.cursor()
@@ -22,6 +22,7 @@ def getData(num):
 #	return dates, temps, hums, pres #add in pres later
 	return dates, temps, hums
 
+#This function  writes the pulled data into a file in a readable format
 def writeData(num):
 	file = open("/home/pi/FourHundy/webserver2.0/sensor_database/DataFile.txt","w+")
 
