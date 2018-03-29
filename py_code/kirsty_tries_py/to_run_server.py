@@ -5,12 +5,14 @@ import time
 import plotly.ploty as py
 from plotly.graph_objs import Scatter, Layout, Figure
 #from flask import Flask, render_template
+
 #stuff for plotly
 username = 'kirstycha'
 api_key = 'IGTdhsbggLKYae1wi7Ej'
 stream_token1 = 'a9kvj05v66'
 stream_token2 = 'cv8vfh7m5j'
 stream_token3 = 'fzr4foq2t6'
+
 #for flask operation
 #app = Flask(__name__)
 #serial port  and baud rate
@@ -19,7 +21,7 @@ ser = serial.Serial('/dev/ttyACM0',9600)
 conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
 curs = conn.cursor()
 
-def plot_1(x_data,y_data,data_name):
+def plot_1(x_data,y_data,data_name, stream_token):
         trace0 = Scatter(
             x=x_data,
             y=y_data,
@@ -35,9 +37,9 @@ def plot_1(x_data,y_data,data_name):
         print py.plot(fig, filename = data_name)
 
 def plot_3(x_data, temp, hum, press):
-    plot_1(x_data, temp, "Temperature")
-    plot_1(x_data, hum, "Humidity")
-    plot_1(x_data, press, "Pressure")
+    plot_1(x_data, temp, "Temperature", stream_token1)
+    plot_1(x_data, hum, "Humidity", stream_token2)
+    plot_1(x_data, press, "Pressure", stream_token3)
 
 def sign_in_plotly():
     py.sign_in(username, api_key)
@@ -61,11 +63,13 @@ def pullData():
 		temperature = float(ser.readline().decode("utf-8"))
 		pressure = float(ser.readline().decode("utf-8"))
 		logData(humidity, temperature, pressure)
+        return 1
 		#print(humidity,temperature,pressure)
 	else:
 		#print("looking for data")
 		#print(line_str)
 		time.sleep(2)
+        return 0
 def getLastData():
     for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
         dateLOC = str(row[1])
@@ -104,7 +108,7 @@ def check_numSamples():
 #define and initialize global variables
 global numSamples
 global stream1, stream2, stream3
-pullData()
+found = pullData()
 numSamples = 0
 check_numSamples()
 times, temps, hums, press = getHistData(numSamples)
@@ -112,11 +116,12 @@ sign_in_plotly()
 plot_3(times, temps, hums, press)
 
 while True:
-    pullData()
-    t1, tp1, h1, p1 = getLastData()
-    stream1.write({'x': t1, 'y': tp1})
-    stream2.write({'x': t1, 'y': h1})
-    stream3.write({'x': t1, 'y': p1})
+    found  = pullData()
+    if  found == 1:
+        t1, tp1, h1, p1 = getLastData()
+        stream1.write({'x': t1, 'y': tp1})
+        stream2.write({'x': t1, 'y': h1})
+        stream3.write({'x': t1, 'y': p1})
 
 
 
