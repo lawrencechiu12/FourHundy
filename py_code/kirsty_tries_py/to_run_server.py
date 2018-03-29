@@ -2,12 +2,50 @@ import serial
 import sqlite3
 import sys
 import time
-import plotly.ploty as py
-from flask import Flask, render_template
+import plotly.ploty as plotly
+#from flask import Flask, render_template
+#stuff for plotly
+username = 'kirstycha'
+api_key = 'IGTdhsbggLKYae1wi7Ej'
+stream_token1 = 'a9kvj05v66'
+stream_token2 = 'cv8vfh7m5j'
+stream_token3 = 'fzr4foq2t6'
+#for flask operation
 app = Flask(__name__)
+#serial port  and baud rate
 ser = serial.Serial('/dev/ttyACM0',9600)
+#to connect to database
 conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
 curs = conn.cursor()
+
+def plot_1(x_data,y_data,data_name):
+        trace0 = Scatter(
+            x=x_data,
+            y=y_data,
+            mode = 'lines+markers',
+            name = data_name,
+            stream = dict(
+                token=stream_token,
+                maxpoints = 100
+                )
+            )
+        layout = Layout(title= data_name)
+        fig = Figure(data=[trace0], layout = layout)
+        print plotly.plot(fig, filename = data_name)
+
+def plot_3(x_data, temp, hum, press):
+    plot_1(x_data, temp, "Temperature")
+    plot_1(x_data, hum, "Humidity")
+    plot_1(x_data, press, "Pressure")
+
+def sign_in_plotly():
+    plotly.sign_in(username, api_key)
+    stream1 = plotly.Stream(stream_token1)
+    stream1.open()
+    stream2 = plotly.Stream(stream_token2)
+    stream2.open()
+    stream3 = plotly.Stream(stream_token3)
+    stream3.open()
 
 def logData(hum, temp, press):
 	curs.execute("INSERT INTO DHT_data VALUES(datetime('now'),datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?),(?),(?))",(hum,temp,press))
@@ -27,35 +65,61 @@ def pullData():
 		#print("looking for data")
 		#print(line_str)
 		time.sleep(2)
+def getLastData():
+    for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
+        dateLOC = str(row[1])
+        temp = row[2]
+        hum = row[3]
+        press = row[4]
+    return dateLOC, temp, hum, presss
 
 def getHistData (numSamples):
+#    conn = sqlite3.connect('sensorsData.db')
+#    curs = conn.cursor()
     curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(numSamples))
     data = curs.fetchall()
-    dates = []
+    datesLOC = []
     temps = []
     hums = []
     press = []
+#    conn.close()
     for row in reversed(data):
-        dates.append(row[0])
-        temps.append(row[1])
-        hums.append(row[2])
-        press.append(row[3])
-    return dates, temps, hums, press
+        datesLOC.append(row[1])
+        temps.append(row[2])
+        hums.append(row[3])
+        press.append(row[4])
+    return datesLOC, temps, hums, press
 
 def maxRowsTable():
     for row in curs.execute("SELECT COUNT(temp) from DHT_data"):
         maxNumberRows = row[0]
     return maxNumberRows
 
+def check_numSamples():
+    if numSamples < 100:
+        numSamples = maxRowsTable()
+
+
 #define and initialize global variables
-global numSamples
-numSamples = maxRowsTable()
-if( numSamples > 101):
-    numSamples = 100
+global numSamples = 0
+global stream1, stream2, stream3
+pullData()
+check_numSamples()
+times, temps, hums, press = getHistData(numSamples)
+sign_in_plotly()
+plot_3(times, temps, hums, press)
 
-@app.route("/")
-def index():
+while True:
+    pullData()
+    t1, tp1, h1, p1 = getLastData()
+    stream1.write({'x': t1, 'y': tp1})
+    stream2.write({'x': t1, 'y': h1})
+    stream3.write({'x': t1, 'y': p1})
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=False)
+
+
+#@app.route("/")
+#def index():
+#if __name__ == "__main__":
+#    app.run(host='0.0.0.0', port=80, debug=False)
