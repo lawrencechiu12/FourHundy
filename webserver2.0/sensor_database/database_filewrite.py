@@ -25,12 +25,9 @@ def getData(num):
 def writeData(num):
 	file = open("/home/pi/FourHundy/webserver2.0/sensor_database/DataFile.txt","w+")
 
+	file.write(" Date				Temperature	 Humidity	Pressure\n")
 	for x in range(0,num):
-	#	file.write("\n" .join(str(dates)))
-		file.write("" .join(str(dates)))
-		file.write(""  .join(str(temps)))
-		file.write(""  .join(str(hums)))
-	#	file.write(""  .join(pres))
+		file.write(" " + (str(dates[x])) + "		" + (str(temps[x])) + "		 " + (str(hums[x])) + "\n") # add in pressure later
 
 	file.close()
 
