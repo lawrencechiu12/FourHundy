@@ -41,14 +41,14 @@ def plot_3(x_data, temp, hum, press):
     plot_1(x_data, hum, "Humidity", stream_token2)
     plot_1(x_data, press, "Pressure", stream_token3)
 
-def sign_in_plotly():
-    py.sign_in(username, api_key)
-    stream1 = py.Stream(stream_token1)
-    stream1.open()
-    stream2 = py.Stream(stream_token2)
-    stream2.open()
-    stream3 = py.Stream(stream_token3)
-    stream3.open()
+#def sign_in_plotly():
+#    py.sign_in(username, api_key)
+#    stream1 = py.Stream(stream_token1)
+#    stream1.open()
+#    stream2 = py.Stream(stream_token2)
+#    stream2.open()
+#    stream3 = py.Stream(stream_token3)
+#    stream3.open()
 
 def logData(hum, temp, press):
 	curs.execute("INSERT INTO DHT_data VALUES(datetime('now'),datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?),(?),(?))",(hum,temp,press))
@@ -63,13 +63,13 @@ def pullData():
 		temperature = float(ser.readline().decode("utf-8"))
 		pressure = float(ser.readline().decode("utf-8"))
 		logData(humidity, temperature, pressure)
-        return 1
+		return 1
 		#print(humidity,temperature,pressure)
 	else:
 		#print("looking for data")
 		#print(line_str)
 		time.sleep(2)
-        return 0
+		return 0
 def getLastData():
     for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
         dateLOC = str(row[1])
@@ -112,7 +112,14 @@ found = pullData()
 numSamples = 0
 check_numSamples()
 times, temps, hums, press = getHistData(numSamples)
-sign_in_plotly()
+#sign_in_plotly()
+py.sign_in(username, api_key)
+stream1 = py.Stream(stream_token1)
+stream1.open()
+stream2 = py.Stream(stream_token2)
+stream2.open()
+stream3 = py.Stream(stream_token3)
+stream3.open()
 plot_3(times, temps, hums, press)
 
 while True:
