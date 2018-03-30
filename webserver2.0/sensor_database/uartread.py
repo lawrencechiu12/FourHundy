@@ -43,7 +43,6 @@ while True:
 				logData(status)
 				print(status)
 				message == "\0"
-				sudo python /home/pi/FourHundy/Scripts/motion_alert.py
 
 		else:
 			print("Waiting for Status")
