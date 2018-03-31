@@ -1,15 +1,15 @@
-import sqlite3
-import plotly.ploty as py
-import time
 import sys
-from plotly.graph_objs import Scatter, Layout, Figure
+import time
+import sqlite3
 import serial
+import plotly.plotly as py
+from plotly.graph_objs import Scatter, Figure, Layout, Stream
 
 username = 'kirstycha'
 api_key = 'IGTdhsbggLKYae1wi7Ej'
 stream_token1 = 'a9kvj05v66'
-stream_token2 = 'cv8vfh7m5j'
-stream_token3 = 'fzr4foq2t6'
+stream_token2='cv8vfh7m5j'
+stream_token3='fzr4foq2t6'
 
 ser = serial.Serial('/dev/ttyACM0',9600)
 
@@ -24,9 +24,9 @@ def maxRowsTable():
 def check_numSamples(numSamples):
 	if numSamples < 100:
 		numSamples = maxRowsTable()
-    else:
-        numSamples = 100
-    return numSamples
+	else:
+		numSamples = 100
+	return numSamples
 
 def getHistData (numSamples):
 #    conn = sqlite3.connect('sensorsData.db')
@@ -58,14 +58,14 @@ def pullData():
 	else:
 		#print("looking for data")
 		#print(line_str)
-		time.sleep(1)
+		#time.sleep(1)
 		status = 0
 	return status
 
 def logData(hum, temp, press):
 	curs.execute("INSERT INTO DHT_data VALUES(datetime('now'),datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?),(?),(?))",(hum,temp,press))
 	conn.commit()
-	time.sleep(1)
+	#time.sleep(1)
 
 def plot_1(x_data,y_data,data_name, stream_token):
 	trace0 = Scatter(
@@ -87,7 +87,7 @@ def plot_3(x_data, temp, hum, press):
 	plot_1(x_data, hum, "Humidity", stream_token2)
 	plot_1(x_data, press, "Pressure", stream_token3)
 
-py.sign_in(username, api_key)
+py.sign_in(username,api_key)
 
 #stream1 = py.Stream(stream_token1)
 #stream1.open()
@@ -100,8 +100,8 @@ global numSamples
 numSamples = 0
 
 while True:
-    found = pullData()
-    if found == 1:
-        numSamples = check_numSamples()
-        time, temp, hum, press = getHistData(numSamples)
-        plot_3(times, temps, hums, press)
+	found = pullData()
+	if found == 1:
+		numSamples = check_numSamples(numSamples)
+		time, temp, hum, press = getHistData(numSamples)
+		plot_3(time, temp, hum, press)

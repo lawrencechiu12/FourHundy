@@ -82,7 +82,7 @@ while True:
 		print(tp1)
 		stream1 = py.Stream(stream_token1)
 		stream1.open()
-		stream1.write({x' = t1, 'y' = tp1})
+		stream1.write({'x' : t1, 'y' : tp1})
 		print("wrote to stream1")
 		stream1.close()
 		#stream2.write(dict(x = t1, y = h1))
