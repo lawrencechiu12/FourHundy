@@ -5,6 +5,7 @@ import plotly.plotly as py
 import time
 import sys
 from plotly.graph_objs import Scatter, Layout, Figure
+import serial
 
 username = 'kirstycha'
 api_key = 'IGTdhsbggLKYae1wi7Ej'
@@ -63,6 +64,6 @@ if( numSamples > 101):
 
 py.sign_in(username, api_key)
 times, temps, hums, press = getHistData(numSamples)
-plot_it(times, temps, hums, press)
+plot_3(times, temps, hums, press)
 stream = py.Stream(stream_token)
 stream.open()

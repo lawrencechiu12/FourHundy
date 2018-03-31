@@ -1,9 +1,9 @@
-import serial
 import sqlite3
 import plotly.ploty as py
 import time
 import sys
 from plotly.graph_objs import Scatter, Layout, Figure
+import serial
 #from flask import Flask, render_template
 
 #stuff for plotly
