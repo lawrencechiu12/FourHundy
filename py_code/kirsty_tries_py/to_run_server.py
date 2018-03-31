@@ -22,24 +22,24 @@ conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
 curs = conn.cursor()
 
 def plot_1(x_data,y_data,data_name, stream_token):
-        trace0 = Scatter(
-            x=x_data,
-            y=y_data,
-            mode = 'lines+markers',
-            name = data_name,
-            stream = dict(
-                token=stream_token,
-                maxpoints = 100
-                )
-            )
-        layout = Layout(title= data_name)
-        fig = Figure(data=[trace0], layout = layout)
-        print py.plot(fig, filename = data_name)
+	trace0 = Scatter(
+		x=x_data,
+		y=y_data,
+		mode = 'lines+markers',
+		name = data_name,
+		stream = dict(
+			token=stream_token,
+			maxpoints = 100
+		)
+	)
+	layout = Layout(title= data_name)
+	fig = Figure(data=[trace0], layout = layout)
+	print py.plot(fig, filename = data_name)
 
 def plot_3(x_data, temp, hum, press):
-    plot_1(x_data, temp, "Temperature", stream_token1)
-    plot_1(x_data, hum, "Humidity", stream_token2)
-    plot_1(x_data, press, "Pressure", stream_token3)
+	plot_1(x_data, temp, "Temperature", stream_token1)
+	plot_1(x_data, hum, "Humidity", stream_token2)
+	plot_1(x_data, press, "Pressure", stream_token3)
 
 #def sign_in_plotly():
 #    py.sign_in(username, api_key)
@@ -70,41 +70,41 @@ def pullData():
 		#print(line_str)
 		time.sleep(2)
 		status = 0
-    return status
+	return status
 
 def getLastData():
-    for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
-        dateLOC = str(row[1])
-        temp = row[2]
-        hum = row[3]
-        press = row[4]
-    return dateLOC, temp, hum, presss
+	for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
+		dateLOC = str(row[1])
+		temp = row[2]
+		hum = row[3]
+		press = row[4]
+	return dateLOC, temp, hum, presss
 
 def getHistData (numSamples):
 #    conn = sqlite3.connect('sensorsData.db')
 #    curs = conn.cursor()
-    curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(numSamples))
-    data = curs.fetchall()
-    datesLOC = []
-    temps = []
-    hums = []
-    press = []
+	curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(numSamples))
+	data = curs.fetchall()
+	datesLOC = []
+	temps = []
+	hums = []
+	press = []
 #    conn.close()
-    for row in reversed(data):
-        datesLOC.append(row[1])
-        temps.append(row[2])
-        hums.append(row[3])
-        press.append(row[4])
-    return datesLOC, temps, hums, press
+	for row in reversed(data):
+		datesLOC.append(row[1])
+		temps.append(row[2])
+		hums.append(row[3])
+		press.append(row[4])
+	return datesLOC, temps, hums, press
 
 def maxRowsTable():
-    for row in curs.execute("SELECT COUNT(temp) from DHT_data"):
-        maxNumberRows = row[0]
-    return maxNumberRows
+	for row in curs.execute("SELECT COUNT(temp) from DHT_data"):
+		maxNumberRows = row[0]
+	return maxNumberRows
 
 def check_numSamples():
-    if numSamples < 100:
-        numSamples = maxRowsTable()
+	if numSamples < 100:
+		numSamples = maxRowsTable()
 
 
 #define and initialize global variables
@@ -125,16 +125,12 @@ stream3.open()
 plot_3(times, temps, hums, press)
 
 while True:
-    found  = pullData()
-    if  found == 1:
-        t1, tp1, h1, p1 = getLastData()
-        stream1.write({'x': t1, 'y': tp1})
-        stream2.write({'x': t1, 'y': h1})
-        stream3.write({'x': t1, 'y': p1})
-
-
-
-
+	found  = pullData()
+	if  found == 1:
+		t1, tp1, h1, p1 = getLastData()
+		stream1.write({'x': t1, 'y': tp1})
+		stream2.write({'x': t1, 'y': h1})
+		stream3.write({'x': t1, 'y': p1})
 #@app.route("/")
 #def index():
 #if __name__ == "__main__":
