@@ -104,6 +104,6 @@ while True:
 	found  = pullData()
 	if  found == 1:
 		t1, tp1, h1, p1 = getLastData()
-		stream1.write({'x': t1, 'y': tp1})
-		stream2.write({'x': t1, 'y': h1})
-		stream3.write({'x': t1, 'y': p1})
+		stream1.write(dict(x = t1, y = tp1))
+		stream2.write(dict(x = t1, y = h1))
+		stream3.write(dict(x = t1, y = p1))
