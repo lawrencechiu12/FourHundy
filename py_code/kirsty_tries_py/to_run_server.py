@@ -1,8 +1,8 @@
 import serial
 import sqlite3
-import sys
-import time
 import plotly.ploty as py
+import time
+import sys
 from plotly.graph_objs import Scatter, Layout, Figure
 #from flask import Flask, render_template
 
@@ -63,13 +63,15 @@ def pullData():
 		temperature = float(ser.readline().decode("utf-8"))
 		pressure = float(ser.readline().decode("utf-8"))
 		logData(humidity, temperature, pressure)
-		return 1
+		status = 1
 		#print(humidity,temperature,pressure)
 	else:
 		#print("looking for data")
 		#print(line_str)
 		time.sleep(2)
-		return 0
+		status = 0
+    return status
+
 def getLastData():
     for row in curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT 1"):
         dateLOC = str(row[1])
