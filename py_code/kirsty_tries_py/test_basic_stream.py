@@ -24,14 +24,14 @@ layout = Layout(title= 'layout')
 fig = Figure(data=[trace0], layout = layout)
 print py.plot(fig, filename = 'test')
 
-stream1 = py.Stream(stream_token1)
-stream1.open()
-stream1.write({'x': 1, 'y': 1})
 ha = 1
 ba = 5
 
 while True:
+	stream1 = py.Stream(stream_token1)
+	stream1.open()
 	stream1.write({'x': ha, 'y': ba})
 	print("i wrote")
+	stream1.close()
 	ha = ba*4
 	ba = ha-6

@@ -27,7 +27,7 @@ def getLastData():
 def logData(hum, temp, press):
 	curs.execute("INSERT INTO DHT_data VALUES(datetime('now'),datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?),(?),(?))",(hum,temp,press))
 	conn.commit()
-	time.sleep(5)
+	time.sleep(2)
 
 def pullData():
 	read_line = ser.readline()
@@ -43,7 +43,7 @@ def pullData():
 	else:
 		print("looking for data")
 		print(line_str)
-		time.sleep(2)
+		time.sleep(1)
 		status = 0
 	return status
 
@@ -76,15 +76,13 @@ while True:
 	print("found variable found")
 	print(found)
 	if  found == 1:
-		print("recognize found is one")
 		t1, tp1, h1, p1 = getLastData()
-		print("last data getted")
 		print("time and temp is")
 		print(t1)
 		print(tp1)
 		stream1 = py.Stream(stream_token1)
 		stream1.open()
-		stream1.write(dict(x = t1, y = tp1))
+		stream1.write({x' = t1, 'y' = tp1})
 		print("wrote to stream1")
 		stream1.close()
 		#stream2.write(dict(x = t1, y = h1))
