@@ -7,16 +7,18 @@ from plotly.graph_objs import Scatter, Figure, Layout, Stream
 #for uart
 from time import sleep
 from math import log
-from flask import flask
+from flask import Flask, render_template
 #plotly declarations
 #arduino + database declarations
-ser = serial.Serial('/dev/ttyACM0',9600)
+#ser = serial.Serial('/dev/ttyACM0',9600)
 conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
 curs = conn.cursor()
 #declation for uart communication
 ser_uart = serial.Serial('/dev/ttyAMA0',9600)
 ser_uart.timeout = 0
 ser_uart.flushInput()
+#definition for flask 
+app = Flask(__name__)
 #functions for UART
 def logData(status):
 	curs.execute("INSERT INTO MOTION_stat VALUES(datetime(strftime('%Y-%m-%d %H:%M:%S','now','localtime')),(?))",(status,))
@@ -128,7 +130,7 @@ def index():
         'hum' : hum,
         'press' : press
     }
-    return render_template('index.html', **templateData_)
+    return render_template('index.html', **templateData)
 
 if __name__=="__main__":
-    app.run(host='0.0.0.0',port=80, debug=True)
+    app.run(host='0.0.0.0',port=80, debug=False)
