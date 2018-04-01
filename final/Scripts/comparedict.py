@@ -31,6 +31,7 @@ def getData(num):
 
 def compareData(dates, temps, hums, pres):
 #def compareData(dates, temps, hums):
+	import database_filewrite
 	if abs(temps[0] - temps[1]) > 4:
 		print "temp"
 		#sudo python /home/pi/FourHundy/final/Scripts/temp_alert.py
