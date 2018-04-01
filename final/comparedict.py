@@ -10,7 +10,7 @@ new_dict = {'dates': None, 'temp': None, 'hum': None, 'pres': None}
 #new_dict = {'dates': None, 'temp': None, 'hum': None}
 
 def getData(num):
-	conn = sqlite3.connect('../sensorsData.db')
+	conn = sqlite3.connect('sensorsData.db')
 	curs = conn.cursor()
 	curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(num))
 	data = curs.fetchall()

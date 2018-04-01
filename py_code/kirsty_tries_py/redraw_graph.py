@@ -34,14 +34,14 @@ def getHistData (numSamples):
 	curs.execute("SELECT * FROM DHT_data ORDER BY time_UTC DESC LIMIT "+str(numSamples))
 	data = curs.fetchall()
 	datesLOC = []
-	temps = []
 	hums = []
+	temps = []
 	press = []
 #    conn.close()
 	for row in reversed(data):
 		datesLOC.append(row[1])
-		temps.append(row[2])
-		hums.append(row[3])
+		hums.append(row[2])
+		temps.append(row[3])
 		press.append(row[4])
 	return datesLOC, temps, hums, press
 

@@ -2,7 +2,7 @@ import sqlite3
 import time
 import sys
 
-conn = sqlite3.connect('../sensorsData.db')
+conn = sqlite3.connect('sensorsData.db')
 curs = conn.cursor()
 
 # This function pulls the latest 6 sets of data from the database
