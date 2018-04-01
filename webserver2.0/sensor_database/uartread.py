@@ -35,7 +35,7 @@ while True:
  				logData(status)
 				print(status)
 				message == "\0"
-				sudo python /home/pi/FourHundy/Scripts/motion_alert.py
+				#sudo python /home/pi/FourHundy/Scripts/motion_alert.py
 
 		elif message == "a31BUTTONOFF":
 			status = 0
