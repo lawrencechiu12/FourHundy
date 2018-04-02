@@ -157,7 +157,7 @@ def index():
 	#check for large change
 	import comparedict
 	#check motion sensor
-	pull_uart()
+	#pull_uart()
 
 	time, temp, hum, press = getLastData()
 	alerttime1, alerttime2, alerttime3, alerttemp, alerthum, alertpress = getAlertData()

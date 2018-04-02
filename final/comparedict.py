@@ -49,7 +49,7 @@ def compareData(dates, temps, hums, pres):
 		humfile.close()
 	if abs(pres[0] - pres[1]) > 5:
 		print "pres"
-		pressfile.write((str(dates[1])) + "\n" + (str(press[1])) + "\n")# will write the latest data(the data the caused the alert) and time to a file
+		pressfile.write((str(dates[1])) + "\n" + (str(pres[1])) + "\n")# will write the latest data(the data the caused the alert) and time to a file
 		#sudo python /home/pi/FourHundy/final/Scripts/pres_alert.py
 		import pres_alert
 		pressfile.close()
