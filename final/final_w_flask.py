@@ -25,8 +25,9 @@ def logData(status):
 	conn.commit()
 	time.sleep(1)
 
-def pull_uart(prev_status):
-	status = prev_status #if a valid message is recieved, this changes
+def pull_uart():
+	prev_status = curs.execute("SELECT status FROM MOTION_stat ORDER BY time_LOC DESC LIMIT 1)
+	#status = prev_status #if a valid message is recieved, this changes
 	if ser_uart.inWaiting() > 0:
 		char=ser_uart.read(1)
 		if char == 'a':
@@ -35,16 +36,18 @@ def pull_uart(prev_status):
 			print(message)
 			if message == "a31BUTTONON-":
 				status = 1
+				logData(status)
 				if status != prev_status:
-					logData(status)
+					#logData(status)
 					print(status)
 					#message == "\0"
 					import motion_alert
 					#sudo python /home/pi/FourHundy/final/Scripts/motion_alert.py
 			elif message == "a31BUTTONOFF":
 				status = 0
+				logData(status)
 				if status != prev_status:
-					logData(status)
+					#logData(status)
 					print(status)
 					#message == "\0"
 	else:
@@ -52,7 +55,6 @@ def pull_uart(prev_status):
 		#message == "\0"
 		#time.sleep(2)
 		#sleep(1)
-	return status
 
 #for finding numSamples
 def maxRowsTable():
@@ -60,10 +62,9 @@ def maxRowsTable():
 		maxNumberRows = row[0]
 	return maxNumberRows
 
-def check_numSamples(numSamples):
-	if numSamples < 100:
+def check_numSamples():
 		numSamples = maxRowsTable()
-	else:
+	if numSamples > 100
 		numSamples = 100
 	return numSamples
 
@@ -137,9 +138,9 @@ def logData(hum, temp, press):
 #functions plotting
 
 #variables
-global numSamples
-numSamples = 0
-prev_status = 0
+#global numSamples
+#numSamples = 0
+#prev_status = 0
 
 #flask operation
 @app.route("/")
@@ -148,13 +149,13 @@ def index():
 	found = pullData()
 	if found == 1:
 	#plot in plotly if something found
-		numSamples = check_numSamples(global numSamples)
+		numSamples = check_numSamples()
 		time, temp, hum, press = getHistData(numSamples)
 		#plot_3(time, temp, hum, press)
 	#check for large change
 	import comparedict
 	#check motion sensor
-	prev_status = pull_uart(prev_status)
+	pull_uart()
 
 	time, temp, hum, press = getLastData()
 	alerttime1, alerttime2, alerttime3, alerttemp, alerthum, alertpress = getAlertData()
