@@ -99,6 +99,9 @@ def getAlertData():
 	info1 = tempfile.readlines() #Reads the data line by line
 	info2 = humfile.readlines()
 	info3 = pressfile.readlines()
+
+	print(info1)
+
 	alerttime1 = info1[0].strip() #alerttime1 becomes the first line (date and time)
 	alerttime2 = info2[0].strip()
 	alerttime3 = info3[0].strip()

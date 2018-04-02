@@ -39,7 +39,7 @@ def getData(num):
 def writeData(num, dates, temps, hums, pres):
 	file = open("/home/pi/FourHundy/final/DataFile.txt","w+")
 	latestData = open("/home/pi/FourHundy/final/latestData.txt","w+")
-	latestData.write((str(dates[x])) + "\n" + (str(temps[x])) + "\n" + (str(hums[x])) + "\n"+(str(pres[x]))+"\n")
+	latestData.write((str(dates[0])) + "\n" + (str(temps[0])) + "\n" + (str(hums[0])) + "\n"+(str(pres[0]))+"\n")
 	file.write(" Date				Temperature		Humidity	Pressure\n")
 	for x in range(0,num):
 		file.write(" " + (str(dates[x])) + "			" + (str(temps[x])) + "		 " + (str(hums[x])) + "		"+(str(pres[x]))+"\n") # add in pressure later
