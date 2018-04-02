@@ -96,7 +96,7 @@ body {font-family: "Lato", sans-serif}
     <h2 class="w3-wide w3-center">HOME CONDITIONS</h2>
     <p class="w3-opacity w3-center"><i>Recent as of: {{time}}</i></p><br>
     <ul class="w3-ul w3-border w3-white w3-text-grey">
-      <li class="w3-padding">Current Temperature: <span class="w3-tag w3-white w3-margin-left"> {{ temp }} oC</span></li>
+      <li class="w3-padding">Current Temperature: <span class="w3-tag w3-white w3-margin-left"> {{ temp }} ºC</span></li>
       <li class="w3-padding">Current Humidity: <span class="w3-tag w3-white w3-margin-left">{{ hum }} %</span></li>
       <li class="w3-padding">Current Pressure: <span class="w3-tag w3-white w3-margin-left">{{ press }} kPa</span></li>
       <!--li class="w3-padding">Alert 3 <span class="w3-badge w3-right w3-margin-right">2018/01/28 Intruder</span></li-->
@@ -110,8 +110,8 @@ body {font-family: "Lato", sans-serif}
 
             <div class="w3-container w3-white">
               <p><b>Alert 1</b></p>
-              <p class="w3-opacity">{{ time }}</p>
-              <p>The Current Temperature Of Your Home is: {{ temp }} oC</p>
+              <p class="w3-opacity">{{ alerttime1 }}</p>
+              <p>Latest Temperature Alert: {{ alerttemp }} ºC</p>
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
             </div>
           </div>
@@ -120,8 +120,8 @@ body {font-family: "Lato", sans-serif}
 
             <div class="w3-container w3-white">
               <p><b>Alert 2</b></p>
-              <p class="w3-opacity">{{ time }}</p>
-              <p>The Current Humidity Of Your Home is: {{ hum }} %</p>
+			  <p class="w3-opacity">{{ alerttime2 }}</p>
+              <p>Latest Humidity Alert: {{ alerthum }} %</p>        
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
             </div>
           </div>
@@ -130,8 +130,8 @@ body {font-family: "Lato", sans-serif}
 
             <div class="w3-container w3-white">
               <p><b>Alert 3</b></p>
-              <p class="w3-opacity">of time</p>
-              <p> Warning of kPa</p>
+              <p class="w3-opacity">{{alerttime3}}</p>
+              <p> Latest Pressure Alert: {{alertpress}} kPa</p>
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
             </div>
           </div>
