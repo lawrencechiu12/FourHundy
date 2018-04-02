@@ -10,7 +10,7 @@ from math import log
 from flask import Flask, render_template
 #plotly declarations
 #arduino + database declarations
-#ser = serial.Serial('/dev/ttyACM0',9600)
+ser = serial.Serial('/dev/ttyACM0',9600)
 conn = sqlite3.connect('sensorsData.db') #if py code lives w sensorsDataTest.db
 curs = conn.cursor()
 #declation for uart communication
@@ -108,7 +108,7 @@ def getAlertData():
 	humfile.close()
 	pressfile.close()
 	latestData.close()
-return alerttime1, alerttime2, alerttime3, temp, hum, press
+	return alerttime1, alerttime2, alerttime3, temp, hum, press
 
 
 #getting data from Arduino
@@ -148,7 +148,7 @@ def index():
 	found = pullData()
 	if found == 1:
 	#plot in plotly if something found
-		numSamples = check_numSamples(numSamples)
+		numSamples = check_numSamples(global numSamples)
 		time, temp, hum, press = getHistData(numSamples)
 		#plot_3(time, temp, hum, press)
 	#check for large change
@@ -156,21 +156,21 @@ def index():
 	#check motion sensor
 	prev_status = pull_uart(prev_status)
 
-    time, temp, hum, press = getLastData()
+	time, temp, hum, press = getLastData()
 	alerttime1, alerttime2, alerttime3, alerttemp, alerthum, alertpress = getAlertData()
-    templateData = {
+	templateData = {
 		'alerttime1' : alertime1,
 		'alerttime2' : alertime2,
 		'alerttime3' : alertime3,
 		'alerttemp' : temp,
 		'alerthum' : hum,
 		'alertpress' : press,
-        'time' : time,
-        'temp' : temp,
-        'hum' : hum,
-        'press' : press
-    }
-    return render_template('index.html', **templateData)
+		'time' : time,
+		'temp' : temp,
+		'hum' : hum,
+		'press' : press
+	}
+	return render_template('index.html', **templateData)
 
 if __name__=="__main__":
-    app.run(host='0.0.0.0',port=80, debug=False)
+	app.run(host='0.0.0.0',port=80, debug=False)
