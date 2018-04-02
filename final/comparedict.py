@@ -4,9 +4,9 @@ import sys
 #import time
 
 num = 2
-old_dict = {'dates': None, 'temp': None, 'hum': None, 'pres': None}
+#old_dict = {'dates': None, 'temp': None, 'hum': None, 'pres': None}
 #old_dict = {'dates': None, 'temp': None, 'hum': None}
-new_dict = {'dates': None, 'temp': None, 'hum': None, 'pres': None}
+#new_dict = {'dates': None, 'temp': None, 'hum': None, 'pres': None}
 #new_dict = {'dates': None, 'temp': None, 'hum': None}
 
 def getData(num):
@@ -55,6 +55,9 @@ def compareData(dates, temps, hums, pres):
 		pressfile.close()
 	else:
 		print "no alert"
+		tempfile.write((str(dates[1])) + "\n" + "no alert")
+		humfile.write((str(dates[1])) + "\n" + "no alert")
+		pressfile.write((str(dates[1])) + "\n" + "no alert")
 		tempfile.close()
 		humfile.close()
 		pressfile.close()
