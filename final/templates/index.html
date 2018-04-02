@@ -45,6 +45,7 @@ body {font-family: "Lato", sans-serif}
 <div class="w3-content" style="max-width:2000px;margin-top:46px">
 
   <!-- Automatic Slideshow Images -->
+  <!--
   <div class="mySlides w3-display-container w3-center">
     <img src="img/something2.jpg" style="width:100%">
     <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
@@ -66,7 +67,7 @@ body {font-family: "Lato", sans-serif}
       <p><b>Thank you, Chicago - A night we won't forget.</b></p>
     </div>
   </div>
-
+-->
   <!-- The About Section -->
   <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="about">
     <h2 class="w3-wide">About</h2>
@@ -89,47 +90,58 @@ body {font-family: "Lato", sans-serif}
   </div>
 
 
-  <!-- The Alerts Section -->
-  <div class="w3-black" id="alerts">
+  <!-- The latest data Section -->
+  <div class="w3-black" id="latestData">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+      <h2 class="w3-wide w3-center">HOME CONDITIONS</h2>
+      <p class="w3-opacity w3-center"><i>Recent as of: {{time}}</i></p><br>
+      <ul class="w3-ul w3-border w3-white w3-text-grey">
+        <li class="w3-padding">Current Temperature: <span class="w3-tag w3-white w3-margin-left"> {{ temp }} oC</span></li>
+        <li class="w3-padding">Current Humidity: <span class="w3-tag w3-white w3-margin-left">{{ hum }} %</span></li>
+        <li class="w3-padding">Current Pressure: <span class="w3-tag w3-white w3-margin-left">{{ press }} kPa</span></li>
+        <!--li class="w3-padding">Alert 3 <span class="w3-badge w3-right w3-margin-right">2018/01/28 Intruder</span></li-->
+      </ul>
+    </div>
+  </div>
+
+
+<!-- The alerts  Section -->
+<div class="w3-black" id="alerts">
     <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
       <h2 class="w3-wide w3-center">SECURITY ALERTS</h2>
       <p class="w3-opacity w3-center"><i>Recent security alerts</i></p><br>
-
-      <ul class="w3-ul w3-border w3-white w3-text-grey">
-        <li class="w3-padding">Alert 1 <span class="w3-tag w3-red w3-margin-left">2018/01/02 High Humidity</span></li>
-        <li class="w3-padding">Alert 2 <span class="w3-tag w3-red w3-margin-left">2018/01/08 High Temperature</span></li>
-        <li class="w3-padding">Alert 3 <span class="w3-tag w3-red w3-margin-left">2018/01/08 Intruder</span></li>
-        <!--li class="w3-padding">Alert 3 <span class="w3-badge w3-right w3-margin-right">2018/01/28 Intruder</span></li-->
-      </ul>
-
       <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+
         <div class="w3-third w3-margin-bottom">
           <img src="/w3images/newyork.jpg" alt="picture of something" style="width:100%" class="w3-hover-opacity">
           <div class="w3-container w3-white">
-            <p><b>Current Temperature</b></p>
+            <p><b>Alert 1</b></p>
             <p class="w3-opacity">{{ time }}</p>
-            <p>The Current Temperature Of Your Home is: {{ temp }}</p>
+            <p>The Current Temperature Of Your Home is: {{ temp }} oC</p>
             <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
           </div>
         </div>
+
         <div class="w3-third w3-margin-bottom">
           <img src="/w3images/paris.jpg" alt="picture of something" style="width:100%" class="w3-hover-opacity">
           <div class="w3-container w3-white">
-            <p><b>Current Humidity</b></p>
-            <p class="w3-opacity">Thu 8 Jan 2018</p>
+            <p><b>Alert 2</b></p>
+            <p class="w3-opacity">{{ time }}</p>
             <p>The Current Humidity Of Your Home is: {{ hum }} %</p>
             <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
           </div>
         </div>
+
         <div class="w3-third w3-margin-bottom">
           <img src="/w3images/sanfran.jpg" alt="picture of something" style="width:100%" class="w3-hover-opacity">
           <div class="w3-container w3-white">
-            <p><b>Current Pressure</b></p>
-            <p class="w3-opacity">Wed 28 Jan 2018</p>
-            <p>The Current Pressure Of Your Home is: {{ press }} kPa</p>
+            <p><b>Alert 3</b></p>
+            <p class="w3-opacity">of time</p>
+            <p> Warning of kPa</p>
             <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('alertPopUp').style.display='block'">More Info</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
