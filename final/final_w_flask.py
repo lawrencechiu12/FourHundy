@@ -17,7 +17,7 @@ curs = conn.cursor()
 ser_uart = serial.Serial('/dev/ttyAMA0',9600)
 ser_uart.timeout = 0
 ser_uart.flushInput()
-#definition for flask 
+#definition for flask
 app = Flask(__name__)
 #functions for UART
 def logData(status):
@@ -89,7 +89,28 @@ def getLastData():
 		hum = row[2]
 		press = row[4]
 	return dateLOC, temp, hum, press
-    
+
+def getAlertData():
+	tempfile = open("/home/pi/FourHundy/final/tempdata.txt","r")
+	humfile = open("/home/pi/FourHundy/final/humdata.txt","r")
+	pressfile = open("/home/pi/FourHundy/final/pressdata.txt","r")
+
+	info1 = tempfile.readlines() #Reads the data line by line
+	info2 = humfile.readlines()
+	info3 = pressfile.readlines()
+	alerttime1 = info1[0].strip() #alerttime1 becomes the first line (date and time)
+	alerttime2 = info2[0].strip()
+	alerttime3 = info3[0].strip()
+	temp = info1[1].strip() #temp becomes the second line (data)
+	hum = info2[1].strip()
+	press = info3[1].strip()
+	tempfile.close()
+	humfile.close()
+	pressfile.close()
+	latestData.close()
+return alerttime1, alerttime2, alerttime3, temp, hum, press
+
+
 #getting data from Arduino
 def pullData():
 	read_line = ser.readline()
@@ -123,8 +144,27 @@ prev_status = 0
 #flask operation
 @app.route("/")
 def index():
+	#read from arduino
+	found = pullData()
+	if found == 1:
+	#plot in plotly if something found
+		numSamples = check_numSamples(numSamples)
+		time, temp, hum, press = getHistData(numSamples)
+		#plot_3(time, temp, hum, press)
+	#check for large change
+	import comparedict
+	#check motion sensor
+	prev_status = pull_uart(prev_status)
+
     time, temp, hum, press = getLastData()
+	alerttime1, alerttime2, alerttime3, alerttemp, alerthum, alertpress = getAlertData()
     templateData = {
+		'alerttime1' : alertime1,
+		'alerttime2' : alertime2,
+		'alerttime3' : alertime3,
+		'alerttemp' : temp,
+		'alerthum' : hum,
+		'alertpress' : press,
         'time' : time,
         'temp' : temp,
         'hum' : hum,
