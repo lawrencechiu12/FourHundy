@@ -31,9 +31,9 @@ def getData(num):
 
 def compareData(dates, temps, hums, pres):
 #def compareData(dates, temps, hums):
-tempfile = open("/home/pi/FourHundy/final/tempdata.txt","w+")
-humfile = open("/home/pi/FourHundy/final/humdata.txt","w+")
-pressfile = open("/home/pi/FourHundy/final/pressdata.txt","w+")
+	tempfile = open("/home/pi/FourHundy/final/tempdata.txt","w+")
+	humfile = open("/home/pi/FourHundy/final/humdata.txt","w+")
+	pressfile = open("/home/pi/FourHundy/final/pressdata.txt","w+")
 	import database_filewrite
 	if abs(temps[0] - temps[1]) > 4:
 		print "temp"

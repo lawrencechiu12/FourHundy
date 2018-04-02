@@ -26,7 +26,7 @@ def logData(status):
 	time.sleep(1)
 
 def pull_uart():
-	prev_status = curs.execute("SELECT status FROM MOTION_stat ORDER BY time_LOC DESC LIMIT 1)
+	prev_status = curs.execute("SELECT status FROM MOTION_stat ORDER BY time_LOC DESC LIMIT 1")
 	#status = prev_status #if a valid message is recieved, this changes
 	if ser_uart.inWaiting() > 0:
 		char=ser_uart.read(1)
@@ -63,8 +63,8 @@ def maxRowsTable():
 	return maxNumberRows
 
 def check_numSamples():
-		numSamples = maxRowsTable()
-	if numSamples > 100
+	numSamples = maxRowsTable()
+	if numSamples > 100:
 		numSamples = 100
 	return numSamples
 
