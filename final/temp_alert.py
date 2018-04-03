@@ -5,7 +5,7 @@ from email.MIMEBase import MIMEBase
 from email import encoders
 
 fromaddr = "testerino.spam12@gmail.com" #Sender email
-toaddr = "kirstycha@gmail.com" #Recieving email
+toaddr = "testerino.spam12@gmail.com" #Recieving email
 
 msg = MIMEMultipart()
 
