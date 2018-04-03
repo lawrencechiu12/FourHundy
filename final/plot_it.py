@@ -58,6 +58,7 @@ def plot_3(x_data, temp, hum, press):
 	plot_1(x_data, hum, "Humidity", stream_token2)
 	plot_1(x_data, press, "Pressure", stream_token3)
 
+py.sign_in(username,api_key)
 numSamples = check_numSamples()
 times, temp, hum, press = getHistData(numSamples)
-plot3(times, temp, hum, press)
+plot_3(times, temp, hum, press)

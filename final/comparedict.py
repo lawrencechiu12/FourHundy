@@ -55,9 +55,9 @@ def compareData(dates, temps, hums, pres):
 		pressfile.close()
 	else:
 		print "no alert"
-		tempfile.write((str(dates[1])) + "\n" + "no alert")
-		humfile.write((str(dates[1])) + "\n" + "no alert")
-		pressfile.write((str(dates[1])) + "\n" + "no alert")
+		#tempfile.write((str(dates[1])) + "\n" + "no alert")
+		#humfile.write((str(dates[1])) + "\n" + "no alert")
+		#pressfile.write((str(dates[1])) + "\n" + "no alert")
 		tempfile.close()
 		humfile.close()
 		pressfile.close()
