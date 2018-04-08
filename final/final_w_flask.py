@@ -156,6 +156,7 @@ def index():
 		#plot_3(time, temp, hum, press)
 	#check for large change
 	import comparedict
+	import plot_it
 	#check motion sensor
 	#pull_uart()
 

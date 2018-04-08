@@ -31,36 +31,42 @@ def getData(num):
 
 def compareData(dates, temps, hums, pres):
 #def compareData(dates, temps, hums):
-	tempfile = open("/home/pi/FourHundy/final/tempdata.txt","w+")
-	humfile = open("/home/pi/FourHundy/final/humdata.txt","w+")
-	pressfile = open("/home/pi/FourHundy/final/pressdata.txt","w+")
+	#tempfile = open("/home/pi/FourHundy/final/tempdata.txt","w+")
+	#humfile = open("/home/pi/FourHundy/final/humdata.txt","w+")
+	#pressfile = open("/home/pi/FourHundy/final/pressdata.txt","w+")
 	import database_filewrite
 	if abs(temps[0] - temps[1]) > 4:
 		print "temp"
+		tempfile = open("/home/pi/FourHundy/final/tempdata.txt","w+")
 		tempfile.write((str(dates[1])) + "\n" + (str(temps[1])) + "\n") # will write the latest data(the data the caused the alert) and time to a file
+		tempfile.close()
 		#sudo python /home/pi/FourHundy/final/Scripts/temp_alert.py
 		import temp_alert
-		tempfile.close()
+		#tempfile.close()
 	if abs(hums[0] - hums[1]) > 5:
 		print "hums"
+		humfile = open("/home/pi/FourHundy/final/humdata.txt","w+")
 		humfile.write((str(dates[1])) + "\n" + (str(hums[1])) + "\n")# will write the latest data(the data the caused the alert) and time to a file
+		humfile.close()
 		#sudo python /home/pi/FourHundy/final/Scripts/hum_alert.py
 		import hum_alert
-		humfile.close()
+		#humfile.close()
 	if abs(pres[0] - pres[1]) > 5:
 		print "pres"
+		pressfile = open("/home/pi/FourHundy/final/pressdata.txt","w+")
 		pressfile.write((str(dates[1])) + "\n" + (str(pres[1])) + "\n")# will write the latest data(the data the caused the alert) and time to a file
+		pressfile.close()
 		#sudo python /home/pi/FourHundy/final/Scripts/pres_alert.py
 		import pres_alert
-		pressfile.close()
+		#pressfile.close()
 	else:
 		print "no alert"
 		#tempfile.write((str(dates[1])) + "\n" + "no alert")
 		#humfile.write((str(dates[1])) + "\n" + "no alert")
 		#pressfile.write((str(dates[1])) + "\n" + "no alert")
-		tempfile.close()
-		humfile.close()
-		pressfile.close()
+		#tempfile.close()
+		#humfile.close()
+		#pressfile.close()
 
 #while True:
 dates, temps, hums, pres = getData(num)
